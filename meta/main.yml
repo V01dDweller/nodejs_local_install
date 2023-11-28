@@ -1,0 +1,13 @@
+# file: meta/main.yml
+---
+galaxy_info:
+  author: v01ddweller
+  description: Install NodeJS in ~/.local
+  company: The Galaxy Project
+  license: AFL v3.0
+  min_ansible_version: '2.9'
+  platforms:
+    - name: Ubuntu
+      release:
+        - all
+...
