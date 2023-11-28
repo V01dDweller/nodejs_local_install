@@ -29,7 +29,7 @@ None.
     - role: nodejs_local_install
       tags:
         - node
-        - nodeks
+        - nodejs
         - devkit
 ```
 
