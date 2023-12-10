@@ -73,6 +73,15 @@
     creates: '{{ node_local_dir }}'
   become: true
 
+- name: Creating ~/.local/node symlink
+  ansible.builtin.file:
+    src: '{{ node_local_dir }}'
+    dest: '{{ node_local_link }}'
+    state: link
+    owner: '{{ node_user }}'
+    group: '{{ node_group }}'
+    mode: '0755'
+  become: true
 
 - name: Creating ~/.noderc
   ansible.builtin.copy:
