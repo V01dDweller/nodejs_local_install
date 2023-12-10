@@ -33,7 +33,7 @@ RUN set -xe \
   && usermod -aG ${DEPLOY_GROUP} ${ANSIBLE_USER} \
   && sed -i "/^%${SUDO_GROUP}/s/ALL\$/NOPASSWD:ALL/g" /etc/sudoers
 
-USER ansible
-WORKDIR /home/ansible
+USER ${ANSIBLE_USER}
+WORKDIR /home/${ANSIBLE_USER}
 
 # vim: ft=jinja2 number nowrap
