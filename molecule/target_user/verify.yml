@@ -1,0 +1,24 @@
+# file: molecule/default/verify.yml
+---
+- name: Verify
+  hosts: all
+  tasks:
+    - name: Retrieving latest version tag from GitHub
+      ansible.builtin.shell: |
+        #!/bin/bash
+        set -o pipefail
+        curl -s https://api.github.com/repos/nodejs/node/releases | \
+        jq '.[].tag_name'|sort|grep {{ node_version }} | tail -n 1
+      changed_when: false
+      register: node_tag
+
+    - name: Checking for node and npm
+      ansible.builtin.stat:
+        path: '~/.local/node-{{ node_tag }}-linux-x64'
+      register: node_check
+
+    - name: Aseerting that Node exists
+      ansible.builtin.assert:
+        that: node_check.stat.exists
+...
+# vim: ft=ansible syntax=yaml.ansible
