@@ -4,11 +4,12 @@
   ansible.builtin.setup:
     gather_subset: min
 
-- name: Installing curl and jq
+- name: Installing curl, jq and xz-utils
   ansible.builtin.package:
     name:
       - curl
       - jq
+      - xz-utils
     state: present
   become: true
 
