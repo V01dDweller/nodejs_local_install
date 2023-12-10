@@ -34,10 +34,16 @@
   ansible.builtin.set_fact:
     node_tag: '{{ node_tag_raw.stdout }}'
 
-- name: Setting node_local_dir fact
+- name: Setting node_user facts
   ansible.builtin.set_fact:
-    node_local_dir: "{{ ansible_user_dir }}\
+    node_user: '{{ target_user | default(ansible_user_id) }}'
+    node_group: '{{ target_group | default(ansible_user_id) }}'
+
+- name: Setting node directory facts
+  ansible.builtin.set_fact:
+    node_local_dir: "/home/{{ node_user }}\
       /.local/node-{{ node_tag }}-linux-x64"
+    node_local_link: "/home/{{ node_user }}/.local/node"
 
 - name: Displaying current Node tag from GitHub
   ansible.builtin.debug:
@@ -50,49 +56,56 @@
 
 - name: Creating ~/.local directory
   ansible.builtin.file:
-    path: '{{ ansible_user_dir }}/.local'
+    path: '/home/{{ node_user }}/.local'
     state: directory
-    owner: '{{ ansible_user_id }}'
-    group: '{{ ansible_user_id }}'
+    owner: '{{ node_user }}'
+    group: '{{ node_group }}'
     mode: '0755'
+  become: true
 
 - name: Untarring NodeJS to ~/.local
   ansible.builtin.unarchive:
     src: '{{ release_url }}/{{ node_tag }}/node-{{ node_tag }}-linux-x64.tar.xz'
     remote_src: true
-    dest: '{{ ansible_user_dir }}/.local'
-    owner: '{{ ansible_user_id }}'
-    group: '{{ ansible_user_id }}'
+    dest: '/home/{{ node_user }}/.local'
+    owner: '{{ node_group }}'
+    group: '{{ node_group }}'
     creates: '{{ node_local_dir }}'
+  become: true
 
-- name: Create ~/.noderc
+
+- name: Creating ~/.noderc
   ansible.builtin.copy:
     content: |
-      PATH={{ node_local_dir }}/bin:$PATH;export PATH
-    dest: '{{ ansible_user_dir }}/.noderc'
-    owner: '{{ ansible_user_id }}'
-    group: '{{ ansible_user_id }}'
+      PATH={{ node_local_link }}/bin:$PATH;export PATH
+    dest: '/home/{{ node_user }}/.noderc'
+    owner: '{{ node_user }}'
+    group: '{{ node_group }}'
     mode: '0644'
+  become: true
 
 - name: Checking for ~/.bashrc
   ansible.builtin.stat:
-    path: '{{ ansible_user_dir }}/.bashrc'
+    path: '/home/{{ node_user }}/.bashrc'
   register: bashrc_check
+  become: true
 
 - name: Creating ~/.bashrc, if needed
   ansible.builtin.copy:
     src: /etc/skel/.bashrc
     remote_src: true
-    dest: '{{ ansible_user_dir }}/.bashrc'
-    owner: '{{ ansible_user_id }}'
-    group: '{{ ansible_user_dir }}'
+    dest: '/home/{{ node_user }}/.bashrc'
+    owner: '{{ node_user }}'
+    group: '{{ node_group }}'
     mode: '0644'
+  become: true
   when: not bashrc_check.stat.exists
 
 - name: Including .noderc in .bashrc
   ansible.builtin.lineinfile:
-    path: '{{ ansible_user_dir }}/.bashrc'
+    path: '/home/{{ node_user }}/.bashrc'
     line: source $HOME/.noderc
     state: present
+  become: true
 ...
 # vim: ft=ansible syntax=yaml.ansible
