@@ -13,6 +13,8 @@ packages.
 - `node_version` - Defaults to `v18` (NodeJS v18) via `defaults/main.yml`
 - `release_url` - Where to download NodeJS tar files. Defaults to
   https://nodejs.org/download/release
+- `target_user` - (Optional) A non-root user for whom to install. User should
+  already exist.
 
 ## Dependencies
 
