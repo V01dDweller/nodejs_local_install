@@ -5,8 +5,9 @@ then adds it to your `PATH`.
 
 ## Requirements
 
-Ansible user must be able to sudo to root. This is needed to install missing
-packages.
+- Ansible user must be able to sudo to root. This is needed to install missing
+  packages and target a non-root user if specified.
+- (optional) A non-root user for whom NodeJS may be installed.
 
 ## Role Variables
 
