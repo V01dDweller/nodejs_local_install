@@ -27,6 +27,8 @@ None.
   hosts: localhost
   connection: local
   gather_facts: false
+  vars:
+    target_user: jdoe # Optional, defaults to Ansible user
   roles:
     - role: nodejs_local_install
       tags:
