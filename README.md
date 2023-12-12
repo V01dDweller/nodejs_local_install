@@ -31,7 +31,9 @@ intended for users who cannot sudo to root.
 - `release_url` - Where to download NodeJS tar files. Defaults to
   https://nodejs.org/download/release
 - `target_user` - (Optional) A non-root user for whom to install. User should
-  already exist.
+  already exist. Use this when running the role as a systems admin who is
+  installing NodeJS for another user, aka the "`target_user`". Be sure to use
+  the `become` directive in this case so that user directories can be created.
 
 ## Dependencies
 
