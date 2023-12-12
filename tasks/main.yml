@@ -4,15 +4,6 @@
   ansible.builtin.setup:
     gather_subset: min
 
-- name: Installing curl, jq and xz-utils
-  ansible.builtin.package:
-    name:
-      - curl
-      - jq
-      - xz-utils
-    state: present
-  become: true
-
 - name: Displaying Node Install message
   ansible.builtin.debug:
     msg: Installing the latest version of NodeJS {{ node_version }}
@@ -61,7 +52,6 @@
     owner: '{{ node_user }}'
     group: '{{ node_group }}'
     mode: '0755'
-  become: true
 
 - name: Untarring NodeJS to ~/.local
   ansible.builtin.unarchive:
@@ -71,7 +61,6 @@
     owner: '{{ node_group }}'
     group: '{{ node_group }}'
     creates: '{{ node_local_dir }}'
-  become: true
 
 - name: Creating ~/.local/node symlink
   ansible.builtin.file:
@@ -81,7 +70,6 @@
     owner: '{{ node_user }}'
     group: '{{ node_group }}'
     mode: '0755'
-  become: true
 
 - name: Creating ~/.noderc
   ansible.builtin.copy:
@@ -91,13 +79,11 @@
     owner: '{{ node_user }}'
     group: '{{ node_group }}'
     mode: '0644'
-  become: true
 
 - name: Checking for ~/.bashrc
   ansible.builtin.stat:
     path: '/home/{{ node_user }}/.bashrc'
   register: bashrc_check
-  become: true
 
 - name: Creating ~/.bashrc, if needed
   ansible.builtin.copy:
@@ -107,7 +93,6 @@
     owner: '{{ node_user }}'
     group: '{{ node_group }}'
     mode: '0644'
-  become: true
   when: not bashrc_check.stat.exists
 
 - name: Including .noderc in .bashrc
@@ -115,6 +100,5 @@
     path: '/home/{{ node_user }}/.bashrc'
     line: source $HOME/.noderc
     state: present
-  become: true
 ...
 # vim: ft=ansible syntax=yaml.ansible
