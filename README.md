@@ -11,7 +11,16 @@ then adds it to your `PATH`.
 
 ## Role Variables
 
-- `node_version` - Defaults to `v18` (NodeJS v18) via `defaults/main.yml`
+- `node_version` - Acceptable values:
+
+   - `v16`
+   - `v18` (default via `defaults/main.yml`)
+   - `v20`
+   - `v21`
+
+  **Note:** Do not use the full semantic version, use the `v` + `Major
+  release` (e.g. `v21`) and allow the role to determine that latest point
+  release.
 - `release_url` - Where to download NodeJS tar files. Defaults to
   https://nodejs.org/download/release
 - `target_user` - (Optional) A non-root user for whom to install. User should
