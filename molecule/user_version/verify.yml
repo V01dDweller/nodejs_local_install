@@ -16,6 +16,10 @@
       changed_when: false
       register: node_tag
 
+    - name: Setting NodeJS Arcthitecture fact
+      ansible.builtin.set_fact:
+        node_arch: '{{ node_arch_options[ansible_architecture] | default("linux-x64") }}'
+
     - name: Checking for node and npm
       ansible.builtin.stat:
         path: '~/.local/node-{{ node_tag }}-{{ node_arch }}'
