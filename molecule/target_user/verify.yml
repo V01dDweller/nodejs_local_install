@@ -2,6 +2,8 @@
 ---
 - name: Verify
   hosts: all
+  vars:
+    node_version: v18
   tasks:
     - name: Including vars
       ansible.builtin.include_vars:
