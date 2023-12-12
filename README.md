@@ -7,9 +7,14 @@ intended for users who cannot sudo to root.
 
 ## Requirements
 
-- Ansible user must be able to sudo to root. This is needed to install missing
-  packages and target a non-root user if specified.
-- (optional) A non-root user for whom NodeJS may be installed.
+- (Optiona) sudo - needed when the operator is using the role to install
+  NodeJS for another user.
+
+- (Optional) A non-root user for whom NodeJS may be installed (see the
+  `target_user` var below).
+
+  If no `target_user` is provided then NodeJS is installed for the Ansible
+  default user.
 
 ## Role Variables
 
