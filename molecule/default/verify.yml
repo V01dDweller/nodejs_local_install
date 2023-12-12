@@ -4,6 +4,10 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Including vars
+      ansible.builtin.include_vars:
+        file: ../../vars/main.yml
+
     - name: Retrieving latest version tag from GitHub
       ansible.builtin.shell: |
         #!/bin/bash
