@@ -1,4 +1,4 @@
-# file: molecule/default/converge.yml
+# file: molecule/user_version/converge.yml
 ---
 - name: Converge
   hosts: all

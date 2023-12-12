@@ -1,4 +1,4 @@
-# file: molecule/default/verify.yml
+# file: molecule/target_user/verify.yml
 ---
 - name: Verify
   hosts: all
