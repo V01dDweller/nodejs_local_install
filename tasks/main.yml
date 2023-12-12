@@ -36,7 +36,7 @@
 
 - name: Setting NodeJS Arcthitecture fact
   ansible.builtin.set_fact:
-    node_arch: '{{ node_arch_options[ansible_architecture] | default("x86_64") }}'
+    node_arch: '{{ node_arch_options[ansible_architecture] | default("linux-x64") }}'
 
 - name: Displaying node_arch
   ansible.builtin.debug:
