@@ -25,7 +25,7 @@ ENV PACKAGE_MANAGER={{'apt' if 'ubuntu' in item.image else 'yum' }}
 ENV REPO_UPDATE_CMD={{'update' if 'ubuntu' in item.image else 'repolist' }}
 RUN set -xe \
   && ${PACKAGE_MANAGER} ${REPO_UPDATE_CMD} \
-  && ${PACKAGE_MANAGER} -y install sudo python3 ca-certificates openssl \
+  && ${PACKAGE_MANAGER} -y install sudo python3 ca-certificates openssl curl jq xz-utils \
   && groupadd -r ${ANSIBLE_USER} \
   && groupadd -r ${DEPLOY_GROUP} \
   && useradd -m -g ${ANSIBLE_USER} ${ANSIBLE_USER} \
