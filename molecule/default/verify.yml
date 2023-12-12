@@ -4,6 +4,10 @@
   hosts: all
   gather_facts: false
   tasks:
+    - name: Including defaults
+      ansible.builtin.include_vars:
+        file: ../../defaults/main.yml
+
     - name: Including vars
       ansible.builtin.include_vars:
         file: ../../vars/main.yml
