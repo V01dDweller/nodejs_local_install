@@ -30,10 +30,22 @@
     node_user: '{{ target_user | default(ansible_user_id) }}'
     node_group: '{{ target_group | default(ansible_user_id) }}'
 
+- name: Displaying ansible_architecture
+  ansible.builtin.debug:
+    var: ansible_architecture
+
+- name: Setting NodeJS Arcthitecture fact
+  ansible.builtin.set_fact:
+    node_arch: '{{ node_arch_options[ansible_architecture] | default("x86_64") }}'
+
+- name: Displaying node_arch
+  ansible.builtin.debug:
+    var: node_arch
+
 - name: Setting node directory facts
   ansible.builtin.set_fact:
     node_local_dir: "/home/{{ node_user }}\
-      /.local/node-{{ node_tag }}-linux-x64"
+                     /.local/node-{{ node_tag }}-{{ node_arch }}"
     node_local_link: "/home/{{ node_user }}/.local/node"
 
 - name: Displaying current Node tag from GitHub
@@ -41,9 +53,21 @@
     msg: |
       'The current relase of NodeJS {{ node_version }} is {{ node_tag }}'
 
+- name: Setting node_tar_file fact
+  ansible.builtin.set_fact:
+    node_tar_file: 'node-{{ node_tag }}-{{ node_arch }}.tar.gz'
+
+- name: Displaying node_tar_file fact
+  ansible.builtin.debug:
+    var: node_tar_file
+
+- name: Setting download_url fact
+  ansible.builtin.set_fact:
+    download_url: '{{ release_url }}/{{ node_tag }}/{{ node_tar_file }}'
+
 - name: Displaying download URL
   ansible.builtin.debug:
-    msg: '{{ release_url }}/{{ node_tag }}/node-{{ node_tag }}-linux-x64.tar.xz'
+    msg: '{{ download_url }}'
 
 - name: Creating ~/.local directory
   ansible.builtin.file:
@@ -55,7 +79,7 @@
 
 - name: Untarring NodeJS to ~/.local
   ansible.builtin.unarchive:
-    src: '{{ release_url }}/{{ node_tag }}/node-{{ node_tag }}-linux-x64.tar.xz'
+    src: '{{ download_url }}'
     remote_src: true
     dest: '/home/{{ node_user }}/.local'
     owner: '{{ node_group }}'
