@@ -30,7 +30,7 @@
 
     - name: Checking for node and npm
       ansible.builtin.stat:
-        path: '~/.local/node-{{ node_tag }}-linux-x64'
+        path: '{{ ansible_user_dir }}/.local/node-{{ node_tag }}-{{ node_arch }}'
       register: node_check
 
     - name: Aseerting that Node exists
