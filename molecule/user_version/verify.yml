@@ -2,6 +2,7 @@
 ---
 - name: Verify
   hosts: all
+  gather_facts: false
   vars:
     target_user: jdoe
     node_version: v21
