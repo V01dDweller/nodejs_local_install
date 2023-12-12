@@ -1,6 +1,6 @@
 # nodejs_local_install
 
-This is an Ansible role for x64 Linux that installs NodeJS directly from
+This is an Ansible role for x64/arm64 Linux that installs NodeJS directly from
 [nodejs.org](https://nodejs.org) into `~/.local` then adds it to the `PATH`
 for a **single user**. It does not install NodeJS system-wide, and it is
 intended for users who cannot sudo to root.
