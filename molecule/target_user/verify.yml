@@ -7,6 +7,10 @@
       ansible.builtin.include_vars:
         file: ../../vars/main.yml
 
+    - name: Gathering facts
+      ansible.builtin.setup:
+        gather_subset: min
+
     - name: Retrieving latest version tag from GitHub
       ansible.builtin.shell: |
         #!/bin/bash
