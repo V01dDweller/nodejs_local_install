@@ -16,9 +16,17 @@
         #!/bin/bash
         set -o pipefail
         curl -s https://api.github.com/repos/nodejs/node/releases | \
-        jq '.[].tag_name'|sort|grep {{ node_version }} | tail -n 1
+        jq '.[].tag_name' | grep {{ node_version }} | sort | tail -n 1 | \
+        sed 's/"//g'
+      args:
+        executable: /bin/bash
       changed_when: false
-      register: node_tag
+      register: node_tag_raw
+
+    - name: Setting node_tag fact
+      ansible.builtin.set_fact:
+        node_tag: '{{ node_tag_raw.stdout }}'
+
 
     - name: Checking for node and npm
       ansible.builtin.stat:
