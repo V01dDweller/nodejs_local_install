@@ -46,12 +46,15 @@ None.
   gather_facts: false
   vars:
     target_user: jdoe # Optional, defaults to Ansible user
+    node_version: v21
   roles:
     - role: nodejs_local_install
       tags:
         - node
         - nodejs
         - devkit
+      become: true   # (Optional) Needed when the operator is installing 
+                     # for user 'jdoe'
 ```
 
 ## License
