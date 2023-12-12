@@ -1,0 +1,50 @@
+# file: molecule/target_user/molecule.yml
+---
+scenario:
+  name: user_version
+  create_sequence:
+    # - dependency
+    - create
+    # - prepare
+  converge_sequence:
+    # - dependency
+    - create
+    # - prepare
+    - converge
+  test_sequence:
+    - destroy
+    # - dependency
+    - syntax
+    - create
+    # - prepare
+    - converge
+    - idempotence
+    # - side_effect
+    - verify
+    - destroy
+  destroy_sequence:
+    # - dependency
+    # - cleanup
+    - destroy
+
+dependency:
+  name: galaxy
+
+driver:
+  name: docker
+
+platforms:
+  - name: ubuntu22_user_version
+    image: 'ubuntu:jammy'
+    pre_build_image: false
+
+provisioner:
+  name: ansible
+  config_options:
+    defaults:
+      stdout_callback: community.general.yaml
+      stderr_callback: community.general.yaml
+  inventory:
+    host_vars:
+      ansible_user: ansible
+...

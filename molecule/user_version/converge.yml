@@ -1,0 +1,15 @@
+# file: molecule/default/converge.yml
+---
+- name: Converge
+  hosts: all
+  gather_facts: false
+  vars:
+    target_user: jdoe
+    node_version: v21
+  roles:
+    - role: nodejs_local_install
+      tags:
+        - node
+        - nodejs
+...
+# vim: ft=ansible syntax=yaml.ansible
