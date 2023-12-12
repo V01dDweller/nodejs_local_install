@@ -1,0 +1,7 @@
+# file: vars/main.yml
+---
+node_arch_options:
+  aarch64: linux-arm64
+  x86_64": linux-x64
+  arm64: darwin-arm64
+...
