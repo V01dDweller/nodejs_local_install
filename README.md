@@ -36,6 +36,11 @@ intended for users who cannot sudo to root.
 ## Dependencies
 
 None.
+The managed system must already have the following packages installed:
+
+ - curl
+ - jq
+ - xz-utils
 
 ## Example Playbook
 
