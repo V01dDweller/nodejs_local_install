@@ -1,5 +1,5 @@
 # file:
 ---
-node_version: v18
+node_version: v21
 release_url: https://nodejs.org/download/release
 ...
